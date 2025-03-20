@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>World Map Selector</title>
+  <!-- Leaflet CSS for map styling -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <!-- Custom CSS file -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Search bar for countries -->
+  <div id="countrySearchWrapper">
+    <input type="text" id="countrySearch" placeholder="Search for a country" />
+  </div>
+
+  <!-- Map container -->
+  <div id="map"></div>
+
+  <!-- List of selected countries by continent -->
+  <div id="countryList"></div>
+
+  <!-- Leaflet JS for map functionality -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <!-- Custom JS file -->
+  <script src="script.js"></script>
+</body>
+
+</html>

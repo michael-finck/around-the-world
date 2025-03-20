@@ -1,0 +1,126 @@
+/* Basic reset for margin, padding, and box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+/* Container for the map */
+#map {
+  flex: 3;
+  height: 100%;
+  border: 2px solid #ccc;
+}
+
+/* Container for the selected countries and continents */
+#countryList {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-left: 2px solid #ccc;
+  height: 100%;
+}
+
+/* Header for the continent sections */
+.continent-section h3 {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+  color: #333;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+/* Highlight the continent when countries are selected */
+.continent-section h3.highlight {
+  background-color: #f2f2f2;
+  color: #d9534f;
+  padding: 5px;
+}
+
+/* Country list styling */
+.continent-section ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.continent-section ul li {
+  margin: 5px 0;
+  font-size: 1em;
+  color: #666;
+}
+
+/* Add hover effect for country items */
+.continent-section ul li:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+/* Country search bar styling */
+#countrySearch {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+/* Styling for highlighted countries on map */
+.leaflet-interactive {
+  cursor: pointer;
+}
+
+/* Custom styling for highlighted country borders */
+.leaflet-interactive.highlighted {
+  fillColor: red; /* Changed to camelCase */
+  fill-opacity: 0.7;
+  weight: 2; /* Valid for Leaflet layer style */
+  color: #d9534f;
+}
+
+/* Country search box positioning */
+#countrySearchWrapper {
+  padding: 10px;
+  background-color: #fff;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Add some space at the top of the page */
+body {
+  padding-top: 40px;
+}
+
+/* Adjust the layout when on smaller screens */
+@media screen and (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  #map {
+    height: 50%;
+    width: 100%;
+  }
+
+  #countryList {
+    height: 50%;
+    overflow-y: auto;
+  }
+}
