@@ -20,20 +20,37 @@ function initializeMap() {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-
-  // Load the GeoJSON data for countries and add it to the map
-  loadGeoJSONData();
 }
 
-// Load the GeoJSON data for countries
-function loadGeoJSONData() {
-  fetch('https://www.dropbox.com/scl/fi/hgp5egbzl96uz4jt8arxt/gadm_410.gpkg?rlkey=qj2kpi26ql6w47915xmiymxfb&st=shc29177&raw=1')
-    .then(response => response.json())
-    .then(data => {
-      geojsonLayer = L.geoJSON(data, {
+// Load the GeoPackage data from Dropbox
+function loadGeoPackageData() {
+  const gpkgUrl = 'https://www.dropbox.com/scl/fi/hgp5egbzl96uz4jt8arxt/gadm_410.gpkg?rlkey=qj2kpi26ql6w47915xmiymxfb&st=shc29177&raw=1';
+
+  fetch(gpkgUrl)
+    .then(response => response.arrayBuffer()) // Get binary data
+    .then(buffer => GeoPackageAPI.open(buffer)) // Open as GeoPackage
+    .then(gpkg => {
+      const featureTables = gpkg.getFeatureTables();
+      if (featureTables.length === 0) {
+        console.error("No feature tables found in the GeoPackage.");
+        return;
+      }
+
+      // Load the first available feature table
+      return gpkg.queryForGeoJSONFeatures(featureTables[0]);
+    })
+    .then(geoJsonData => {
+      if (!geoJsonData) {
+        console.error("Failed to extract GeoJSON from GeoPackage.");
+        return;
+      }
+
+      // Add GeoJSON layer to Leaflet map
+      geojsonLayer = L.geoJSON(geoJsonData, {
         onEachFeature: onEachCountry
       }).addTo(map);
-    });
+    })
+    .catch(error => console.error("Error loading GeoPackage:", error));
 }
 
 // Function to handle each country feature in GeoJSON
@@ -117,6 +134,7 @@ function initializeSearch() {
 
 // Run the initialization functions when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  initializeMap();  // Initialize the map
-  initializeSearch();  // Initialize the search functionality
+  initializeMap(); // Initialize the map
+  loadGeoPackageData(); // Load the .gpkg file from Dropbox
+  initializeSearch(); // Initialize the search functionality
 });
